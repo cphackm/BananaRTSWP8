@@ -30,7 +30,9 @@ namespace BananaRTSWP8.Framework.Managers
 
 		public static TouchLocation GetTouchPoint(int Index)
 		{
-			return panel[Index];
+			TouchLocation tl = panel[Index];
+			tl = new TouchLocation(tl.Id, tl.State, tl.Position + RenderManager.Scroll);
+			return tl;
 		}
 	}
 }

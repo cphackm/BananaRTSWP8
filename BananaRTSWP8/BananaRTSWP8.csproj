@@ -80,12 +80,13 @@
     <Compile Include="Framework\Managers\InputManager.cs" />
     <Compile Include="Framework\Managers\LevelManager.cs" />
     <Compile Include="Framework\Managers\RenderManager.cs" />
-    <Compile Include="Game\GlobalConstants.cs" />
-    <Compile Include="Game\Levels\Battlefield.cs" />
-    <Compile Include="Game\Objects\Buildings\Building.cs" />
-    <Compile Include="Game\Objects\FactionAsset.cs" />
-    <Compile Include="Game\Objects\FactionAssetContextMenu.cs" />
-    <Compile Include="Game\Objects\Units\Unit.cs" />
+    <Compile Include="RTSGame\GlobalConstants.cs" />
+    <Compile Include="RTSGame\Levels\Battlefield.cs" />
+    <Compile Include="RTSGame\Objects\Buildings\Building.cs" />
+    <Compile Include="RTSGame\Objects\Buildings\DebugBuilding\DebugBuilding.cs" />
+    <Compile Include="RTSGame\Objects\FactionAsset.cs" />
+    <Compile Include="RTSGame\Objects\FactionAssetContextMenu.cs" />
+    <Compile Include="RTSGame\Objects\Units\Unit.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="GamePage.xaml.cs">
       <DependentUpon>GamePage.xaml</DependentUpon>

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using BananaRTSWP8.Framework.Managers;
 
 namespace BananaRTSWP8
 {
@@ -25,9 +26,10 @@ namespace BananaRTSWP8
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             base.Initialize();
+
+			// Setup the render manager
+			RenderManager.Initialize(GraphicsDevice);
         }
 
         /// <summary>
@@ -36,10 +38,6 @@ namespace BananaRTSWP8
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>

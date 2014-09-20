@@ -15,6 +15,18 @@ namespace BananaRTSWP8.Framework.Managers
 		private static bool isSpriteBatchRunning;
 		private static IDictionary<string, Texture2D> textures;
 		private static Texture2D nextTexture;
+		private static Vector2 scroll;
+		public static Vector2 Scroll
+		{
+			get
+			{
+				return scroll;
+			}
+			set
+			{
+				scroll = value;
+			}
+		}
 
 		/// <summary>
 		/// Static constructor for initializing necessary objects.
@@ -23,6 +35,7 @@ namespace BananaRTSWP8.Framework.Managers
 		{
 			textures = new Dictionary<string, Texture2D>();
 			nextTexture = null;
+			scroll = Vector2.Zero;
 		}
 
 		/// <summary>
@@ -91,6 +104,12 @@ namespace BananaRTSWP8.Framework.Managers
 		public static void SetTexture(string Key)
 		{
 			nextTexture = textures[Key];
+		}
+
+		public static void DrawQuad(string Key, Vector2 Position)
+		{
+			nextTexture = Key == null ? nextTexture : textures[Key];
+			spriteBatch.Draw(nextTexture, Position, Color.White);
 		}
 	}
 }

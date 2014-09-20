@@ -93,6 +93,7 @@ namespace BananaRTSWP8.Framework.Chunks.Helpers
 		{
 			time = 0.0f;
 			isRunning = Start;
+			isCompleted = false;
 		}
 	}
 }

@@ -37,7 +37,7 @@ namespace BananaRTSWP8.Framework.Chunks.Structural
 			return localStates.ContainsKey(Key);
 		}
 
-		public void RegisterObject(AbstractGameObject GameObject, bool Drawable)
+		public virtual void RegisterObject(AbstractGameObject GameObject, bool Drawable)
 		{
 			RegisterUpdatableObject(GameObject);
 
@@ -47,17 +47,17 @@ namespace BananaRTSWP8.Framework.Chunks.Structural
 			}
 		}
 
-		public void RegisterUpdatableObject(AbstractGameObject GameObject)
+		public virtual void RegisterUpdatableObject(AbstractGameObject GameObject)
 		{
 			updatableObjects.Add(GameObject);
 		}
 
-		public void RegisterDrawableObject(AbstractGameObject GameObject)
+		public virtual void RegisterDrawableObject(AbstractGameObject GameObject)
 		{
 			drawableObjects.Add(GameObject);
 		}
 
-		public void Update()
+		public virtual void Update()
 		{
 			foreach (AbstractGameObject ago in updatableObjects)
 			{
@@ -65,7 +65,7 @@ namespace BananaRTSWP8.Framework.Chunks.Structural
 			}
 		}
 
-		public void Render()
+		public virtual void Render()
 		{
 			RenderManager.BeginSpriteBatching();
 
