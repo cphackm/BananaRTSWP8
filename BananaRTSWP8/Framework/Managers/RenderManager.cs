@@ -5,11 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Content;
 
 namespace BananaRTSWP8.Framework.Managers
 {
 	public class RenderManager
 	{
+		private static ContentManager cm;
 		private static GraphicsDevice graphicsDevice;
 		private static SpriteBatch spriteBatch;
 		private static bool isSpriteBatchRunning;
@@ -42,8 +44,9 @@ namespace BananaRTSWP8.Framework.Managers
 		/// Method for initializing the RenderManager with data that can't be retrieved by the static constructor.
 		/// </summary>
 		/// <param name="GDevice">Reference to the graphics device.</param>
-		public static void Initialize(GraphicsDevice GDevice)
+		public static void Initialize(GraphicsDevice GDevice, ContentManager CM)
 		{
+			cm = CM;
 			graphicsDevice = GDevice;
 			spriteBatch = new SpriteBatch(graphicsDevice);
 			isSpriteBatchRunning = false;
@@ -104,6 +107,11 @@ namespace BananaRTSWP8.Framework.Managers
 		public static void SetTexture(string Key)
 		{
 			nextTexture = textures[Key];
+		}
+
+		public static void LoadTexture(string Key, string Path)
+		{
+			textures[Key] = cm.Load<Texture2D>(Path);
 		}
 
 		public static void DrawQuad(string Key, Vector2 Position)

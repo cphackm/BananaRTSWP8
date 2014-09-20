@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using BananaRTSWP8.RTSGame;
 using BananaRTSWP8.Framework.Managers;
+using BananaRTSWP8.RTSGame.Levels;
 
 namespace BananaRTSWP8
 {
@@ -10,7 +12,6 @@ namespace BananaRTSWP8
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
 
         public Game1()
         {
@@ -27,9 +28,12 @@ namespace BananaRTSWP8
         protected override void Initialize()
         {
             base.Initialize();
+			
+			// Create the battlefield level
+			Battlefield battlefield = new Battlefield();
 
-			// Setup the render manager
-			RenderManager.Initialize(GraphicsDevice);
+			// Explicitly set the current level
+			LevelManager.SetLevel(GlobalConstants.BATTLEFIELD_LEVEL);
         }
 
         /// <summary>
@@ -38,6 +42,10 @@ namespace BananaRTSWP8
         /// </summary>
         protected override void LoadContent()
         {
+			// Setup the render manager
+			RenderManager.Initialize(GraphicsDevice, this.Content);
+
+			RenderManager.LoadTexture("DEBUG_BUILDING", "Buildings/Debug/debug");
         }
 
         /// <summary>
@@ -56,7 +64,12 @@ namespace BananaRTSWP8
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            // TODO: Add your update logic here
+            // Update the GameManager, which keeps track of the time delta and shit
+			GameManager.Update(gameTime);
+			InputManager.Update();
+
+			// Update the current level
+			LevelManager.Update();
 
             base.Update(gameTime);
         }
@@ -69,7 +82,7 @@ namespace BananaRTSWP8
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+			LevelManager.Render();
 
             base.Draw(gameTime);
         }

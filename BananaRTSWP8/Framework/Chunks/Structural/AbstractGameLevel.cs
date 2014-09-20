@@ -17,8 +17,19 @@ namespace BananaRTSWP8.Framework.Chunks.Structural
 		private IList<AbstractGameObject> updatableObjects;
 		private IList<AbstractGameObject> drawableObjects;
 
-		public AbstractGameLevel()
+		protected string name;
+		public string Name
 		{
+			get
+			{
+				return name;
+			}
+		}
+
+		public AbstractGameLevel(string Name)
+		{
+			LevelManager.RegisterLevel(Name, this);
+			LevelManager.SetLevel(Name);
 			localStates = new Dictionary<string, object>();
 
 			updatableObjects = new List<AbstractGameObject>();

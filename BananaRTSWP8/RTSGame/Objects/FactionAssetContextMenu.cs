@@ -21,6 +21,11 @@ namespace BananaRTSWP8.RTSGame.Objects
 			}
 		}
 
+		public FactionAssetContextMenu()
+		{
+			isActive = false;
+		}
+
 		public virtual void Activate()
 		{
 			isActive = true;

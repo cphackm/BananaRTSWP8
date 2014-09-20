@@ -31,5 +31,9 @@ namespace BananaRTSWP8.Framework.Chunks.Dynamic
 		public override void Update()
 		{
 		}
+
+		public override void Render()
+		{
+		}
 	}
 }

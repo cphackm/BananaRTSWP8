@@ -9,6 +9,7 @@ namespace BananaRTSWP8.Framework.Managers
 {
 	public class LevelManager
 	{
+		private static IDictionary<string, AbstractGameLevel> levels;
 		private static AbstractGameLevel currentLevel;
 		public static AbstractGameLevel CurrentLevel
 		{
@@ -18,9 +19,19 @@ namespace BananaRTSWP8.Framework.Managers
 			}
 		}
 
-		public static void SetLevel(AbstractGameLevel Level)
+		static LevelManager()
 		{
-			currentLevel = Level;
+			levels = new Dictionary<string, AbstractGameLevel>();
+		}
+
+		public static void RegisterLevel(string Key, AbstractGameLevel Level)
+		{
+			levels[Key] = Level;
+		}
+
+		public static void SetLevel(string Key)
+		{
+			currentLevel = levels[Key];
 		}
 
 		public static void Update()

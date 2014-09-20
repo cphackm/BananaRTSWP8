@@ -12,5 +12,7 @@ namespace BananaRTSWP8.RTSGame
 
 		public const int TILE_WIDTH = 64;
 		public const int TILE_HEIGHT = TILE_WIDTH / 2;
+
+		public const string BATTLEFIELD_LEVEL = "BATTLEFIELD";
 	}
 }

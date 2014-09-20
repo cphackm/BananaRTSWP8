@@ -16,7 +16,7 @@ namespace BananaRTSWP8.RTSGame.Levels
 		protected IList<Unit> units;
 		protected IList<Building> buildings;
 
-		public Battlefield() : base()
+		public Battlefield() : base(GlobalConstants.BATTLEFIELD_LEVEL)
 		{
 			units = new List<Unit>();
 			buildings = new List<Building>();
