@@ -109,7 +109,7 @@ namespace BananaRTSWP8.Framework.Managers
 		public static void DrawQuad(string Key, Vector2 Position)
 		{
 			nextTexture = Key == null ? nextTexture : textures[Key];
-			spriteBatch.Draw(nextTexture, Position, Color.White);
+			spriteBatch.Draw(nextTexture, Position - scroll, Color.White);
 		}
 	}
 }
