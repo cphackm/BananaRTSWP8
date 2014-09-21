@@ -66,6 +66,7 @@ namespace BananaRTSWP8.Framework.Chunks.Helpers
 
 				if (time >= length)
 				{
+					time = length;
 					isRunning = false;
 					isCompleted = true;
 				}

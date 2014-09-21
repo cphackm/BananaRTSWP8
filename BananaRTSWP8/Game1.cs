@@ -46,6 +46,7 @@ namespace BananaRTSWP8
 			RenderManager.Initialize(GraphicsDevice, this.Content);
 
 			RenderManager.LoadTexture("DEBUG_BUILDING", "Buildings/Debug/debug");
+			RenderManager.LoadTexture("CONTEXT_MENU_CIRCLE", "UI/ContextMenus/circle");
         }
 
         /// <summary>

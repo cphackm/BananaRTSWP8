@@ -76,6 +76,7 @@
     <Compile Include="Framework\Chunks\Helpers\Timer.cs" />
     <Compile Include="Framework\Chunks\Structural\AbstractGameLevel.cs" />
     <Compile Include="Framework\Chunks\Dynamic\AbstractSprite.cs" />
+    <Compile Include="Framework\Helpers\BananaMath.cs" />
     <Compile Include="Framework\Managers\GameManager.cs" />
     <Compile Include="Framework\Managers\InputManager.cs" />
     <Compile Include="Framework\Managers\LevelManager.cs" />
@@ -112,6 +113,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Buildings\Debug\debug.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\ContextMenus\circle.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\AppManifest.xml" />

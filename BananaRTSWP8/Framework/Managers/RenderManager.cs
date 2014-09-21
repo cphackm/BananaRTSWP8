@@ -114,10 +114,19 @@ namespace BananaRTSWP8.Framework.Managers
 			textures[Key] = cm.Load<Texture2D>(Path);
 		}
 
-		public static void DrawQuad(string Key, Vector2 Position)
+		public static void DrawQuad(string Key, Vector2 Position, Nullable<Color> Col = null, float Angle = 0.0f, float Scale = 1.0f, Nullable<Vector2> Origin = null, float Depth = 1.0f)
 		{
 			nextTexture = Key == null ? nextTexture : textures[Key];
-			spriteBatch.Draw(nextTexture, Position - scroll, Color.White);
+			spriteBatch.Draw(
+				nextTexture, 
+				Position, 
+				new Rectangle(0, 0, nextTexture.Width, nextTexture.Height), 
+				Col == null ? Color.White : Col.Value, 
+				Angle, 
+				Origin == null ? Vector2.Zero : new Vector2(Origin.Value.X * (float)nextTexture.Width, Origin.Value.Y * (float)nextTexture.Height), 
+				Scale, 
+				SpriteEffects.None, 
+				Depth);
 		}
 	}
 }

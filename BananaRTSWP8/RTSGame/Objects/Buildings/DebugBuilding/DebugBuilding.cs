@@ -16,7 +16,9 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings.DebugBuilding
 	{
 		public DebugBuilding(int GridX, int GridY) : base(2, 2, GridX, GridY)
 		{
-			contextMenu = new DebugBuildingContextMenu();
+			pos = new Vector2((GridX + 1) * GlobalConstants.TILE_WIDTH, (GridY + 1) * GlobalConstants.TILE_HEIGHT);
+			contextMenu = new DebugBuildingContextMenu(pos);
+			level.RegisterObject(contextMenu, true);
 		}
 
 		public override void Update()
@@ -26,7 +28,7 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings.DebugBuilding
 
 		public override void Render()
 		{
-			RenderManager.DrawQuad("DEBUG_BUILDING", new Vector2(gridX * GlobalConstants.TILE_WIDTH, gridY * GlobalConstants.TILE_HEIGHT));
+			RenderManager.DrawQuad(Key: "DEBUG_BUILDING", Position: new Vector2(gridX * GlobalConstants.TILE_WIDTH, (gridY - 2) * GlobalConstants.TILE_HEIGHT));
 		}
 
 		public override bool IsPointInAsset(TouchLocation TL)

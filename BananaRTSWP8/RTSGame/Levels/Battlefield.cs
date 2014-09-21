@@ -21,7 +21,7 @@ namespace BananaRTSWP8.RTSGame.Levels
 			units = new List<Unit>();
 			buildings = new List<Building>();
 
-			DebugBuilding db = new DebugBuilding(5, 5);
+			DebugBuilding db = new DebugBuilding(3, 5);
 			RegisterObject(db, true);
 		}
 

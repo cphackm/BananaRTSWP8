@@ -69,22 +69,27 @@ namespace BananaRTSWP8.RTSGame.Objects
 					{
 						contextTimer.StartTimer();
 					}
-					else if (contextTimer.IsCompleted)
+					else if (contextTimer.IsCompleted && !contextMenu.IsActive)
 					{
 						contextMenu.Activate();
+					}
+				}
+				else
+				{
+					if (contextTimer.IsRunning)
+					{
+						contextTimer.ResetTimer(false);
 					}
 				}
 			}
 			else
 			{
-				if (contextTimer.IsRunning)
-				{
-					contextTimer.ResetTimer(false);
-				}
-				else if (contextTimer.IsCompleted)
+				if (contextTimer.IsCompleted)
 				{
 					contextMenu.Deactivate();
 				}
+
+				contextTimer.ResetTimer(false);
 			}
 		}
 
