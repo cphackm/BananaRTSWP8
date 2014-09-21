@@ -84,6 +84,7 @@
     <Compile Include="RTSGame\GlobalConstants.cs" />
     <Compile Include="RTSGame\Levels\Battlefield.cs" />
     <Compile Include="RTSGame\Objects\Buildings\Building.cs" />
+    <Compile Include="RTSGame\Objects\Buildings\TwoUnitBuildingContextMenu.cs" />
     <Compile Include="RTSGame\Objects\Buildings\DebugBuilding\DebugBuilding.cs" />
     <Compile Include="RTSGame\Objects\Buildings\DebugBuilding\DebugBuildingContextMenu.cs" />
     <Compile Include="RTSGame\Objects\FactionAsset.cs" />
