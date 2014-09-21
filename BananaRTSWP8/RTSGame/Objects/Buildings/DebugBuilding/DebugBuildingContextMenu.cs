@@ -21,6 +21,8 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings.DebugBuilding
 		private static readonly Vector2 BUBBLE_A_POS = new Vector2(-128.0f, -64.0f);
 		private static readonly Vector2 BUBBLE_B_POS = new Vector2(128.0f, -64.0f);
 
+		private const float COUNT_BUBBLE_DISTANCE = 96.0f;
+
 		protected Timer unitBubbleTimerIn;
 		protected Timer unitBubbleTimerOut;
 		protected Timer unitCountBubbleTimerIn;
@@ -107,7 +109,7 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings.DebugBuilding
 					for (int i = 0; i < 4; i++)
 					{
 						float angle = MathHelper.Pi + MathHelper.PiOver4 * (float)i;
-						Vector2 bubblePos = new Vector2((float)Math.Cos(angle) * 96.0f, (float)Math.Sin(angle) * 96.0f) + (touchedBubble == BUBBLE_A_ID ? BUBBLE_A_POS : BUBBLE_B_POS);
+						Vector2 bubblePos = new Vector2((float)Math.Cos(angle) * COUNT_BUBBLE_DISTANCE, (float)Math.Sin(angle) * COUNT_BUBBLE_DISTANCE) + (touchedBubble == BUBBLE_A_ID ? BUBBLE_A_POS : BUBBLE_B_POS);
 						RenderManager.DrawQuad(
 							Key: "CONTEXT_MENU_CIRCLE", 
 							Position: pos + bubblePos, 
