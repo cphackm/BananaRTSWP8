@@ -87,6 +87,7 @@
     <Compile Include="RTSGame\Objects\Buildings\TwoUnitBuildingContextMenu.cs" />
     <Compile Include="RTSGame\Objects\Buildings\DebugBuilding\DebugBuilding.cs" />
     <Compile Include="RTSGame\Objects\Buildings\DebugBuilding\DebugBuildingContextMenu.cs" />
+    <Compile Include="RTSGame\Objects\Debug\BattlefieldDebug.cs" />
     <Compile Include="RTSGame\Objects\FactionAsset.cs" />
     <Compile Include="RTSGame\Objects\FactionAssetContextMenu.cs" />
     <Compile Include="RTSGame\Objects\Units\Unit.cs" />
@@ -117,6 +118,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\UI\ContextMenus\circle.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\UI\Debug\fontMenuItem.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Properties\AppManifest.xml" />

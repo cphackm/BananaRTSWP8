@@ -20,8 +20,14 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings
 
 		private static readonly Vector2 BUBBLE_A_POS = new Vector2(-128.0f, -64.0f);
 		private static readonly Vector2 BUBBLE_B_POS = new Vector2(128.0f, -64.0f);
-
 		private const float COUNT_BUBBLE_DISTANCE = 96.0f;
+		private static readonly Vector2[] COUNT_BUBBLES = 
+		{ 
+			new Vector2((float)Math.Cos(MathHelper.Pi) * COUNT_BUBBLE_DISTANCE, (float)Math.Sin(MathHelper.Pi) * COUNT_BUBBLE_DISTANCE),
+			new Vector2((float)Math.Cos(MathHelper.Pi + MathHelper.PiOver4) * COUNT_BUBBLE_DISTANCE, (float)Math.Sin(MathHelper.Pi + MathHelper.PiOver4) * COUNT_BUBBLE_DISTANCE),
+			new Vector2((float)Math.Cos(MathHelper.Pi + MathHelper.PiOver4 * 2.0f) * COUNT_BUBBLE_DISTANCE, (float)Math.Sin(MathHelper.Pi + MathHelper.PiOver4 * 2.0f) * COUNT_BUBBLE_DISTANCE),
+			new Vector2((float)Math.Cos(MathHelper.Pi + MathHelper.PiOver4 * 3.0f) * COUNT_BUBBLE_DISTANCE, (float)Math.Sin(MathHelper.Pi + MathHelper.PiOver4 * 3.0f) * COUNT_BUBBLE_DISTANCE)
+		};
 
 		protected Timer unitBubbleTimerIn;
 		protected Timer unitBubbleTimerOut;
@@ -29,6 +35,11 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings
 		protected Timer unitCountBubbleTimerOut;
 
 		protected int touchedBubble;
+		protected bool isTouchingA;
+		protected bool isTouchingB;
+		protected bool isAroundA;
+		protected bool isAroundB;
+		protected bool[] isTouchingCount;
 
 		public TwoUnitBuildingContextMenu(Vector2 Position) : base()
 		{
@@ -43,6 +54,11 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings
 			level.RegisterUpdatableObject(unitCountBubbleTimerOut);
 
 			touchedBubble = -1;
+			isTouchingA = false;
+			isTouchingB = false;
+			isAroundA = false;
+			isAroundB = false;
+			isTouchingCount = new bool[] { false, false, false, false};
 		}
 
 		public override void Update()
@@ -52,8 +68,17 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings
 				if (InputManager.GetTouchCount() > 0)
 				{
 					TouchLocation tl = InputManager.GetTouchPoint(0);
-					bool isTouchingA = Vector2.DistanceSquared(pos + BUBBLE_A_POS, tl.Position) <= (64 * 64);
-					bool isTouchingB = Vector2.DistanceSquared(pos + BUBBLE_B_POS, tl.Position) <= (64 * 64);
+					float distanceToA = Vector2.DistanceSquared(pos + BUBBLE_A_POS, tl.Position);
+					float distanceToB = Vector2.DistanceSquared(pos + BUBBLE_B_POS, tl.Position);
+					isTouchingA = distanceToA <= (64 * 64);
+					isTouchingB = distanceToB <= (64 * 64);
+					isAroundA = distanceToA <= (128 * 128);
+					isAroundB = distanceToB <= (128 * 128);
+					for (int i = 0; i < 4; i++)
+					{
+						isTouchingCount[i] = Vector2.DistanceSquared(pos + (isAroundA ? BUBBLE_A_POS : BUBBLE_B_POS) + COUNT_BUBBLES[i], tl.Position) <= (32.0f * 32.0f);
+					}
+
 					if (isTouchingA || isTouchingB)
 					{
 						if (!unitCountBubbleTimerIn.IsRunning && !unitCountBubbleTimerIn.IsCompleted && !unitCountBubbleTimerOut.IsRunning)
@@ -72,14 +97,17 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings
 					}
 					else
 					{
-						if ((unitCountBubbleTimerIn.IsRunning || unitCountBubbleTimerIn.IsCompleted) && !unitCountBubbleTimerOut.IsRunning)
+						if (!isAroundA && !isAroundB)
 						{
-							unitCountBubbleTimerIn.ResetTimer(false);
-							unitCountBubbleTimerOut.ResetTimer(true);
-						}
-						else if (unitCountBubbleTimerOut.IsCompleted)
-						{
-							touchedBubble = -1;
+							if ((unitCountBubbleTimerIn.IsRunning || unitCountBubbleTimerIn.IsCompleted) && !unitCountBubbleTimerOut.IsRunning)
+							{
+								unitCountBubbleTimerIn.ResetTimer(false);
+								unitCountBubbleTimerOut.ResetTimer(true);
+							}
+							else if (unitCountBubbleTimerOut.IsCompleted)
+							{
+								touchedBubble = -1;
+							}
 						}
 					}
 				}
@@ -90,6 +118,53 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings
 						unitCountBubbleTimerIn.ResetTimer(false);
 						unitCountBubbleTimerOut.ResetTimer(true);
 					}
+
+					if (isAroundA)
+					{
+						if (isTouchingA)
+						{
+							BubbleAAction(1);
+						}
+						else
+						{
+							for (int i = 0; i < 4; i++)
+							{
+								if (isTouchingCount[i])
+								{
+									BubbleAAction(i + 2);
+									break;
+								}
+							}
+						}
+					}
+					else if (isAroundB)
+					{
+						if (isTouchingB)
+						{
+							BubbleBAction(1);
+						}
+						else
+						{
+							for (int i = 0; i < 4; i++)
+							{
+								if (isTouchingCount[i])
+								{
+									BubbleBAction(i + 2);
+									break;
+								}
+							}
+						}
+					}
+
+					touchedBubble = -1;
+					isTouchingA = false;
+					isTouchingB = false;
+					isAroundA = false;
+					isAroundB = false;
+					for (int i = 0; i < 4; i++)
+					{
+						isTouchingCount[i] = false;
+					}
 				}
 			}
 		}
@@ -98,8 +173,18 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings
 		{
 			if (unitBubbleTimerIn.IsRunning || unitBubbleTimerIn.IsCompleted || unitBubbleTimerOut.IsRunning)
 			{
-				RenderManager.DrawQuad(Key: "CONTEXT_MENU_CIRCLE", Position: pos + BUBBLE_A_POS, Scale: unitBubbleTimerOut.IsRunning ? BananaMath.Qerp(0.5f, 0.7f, 0.0f, unitBubbleTimerOut.Status) : BananaMath.Qerp(0, 0.7f, 0.5f, unitBubbleTimerIn.Status), Origin: new Vector2(0.5f));
-				RenderManager.DrawQuad(Key: "CONTEXT_MENU_CIRCLE", Position: pos + BUBBLE_B_POS, Scale: unitBubbleTimerOut.IsRunning ? BananaMath.Qerp(0.5f, 0.7f, 0.0f, unitBubbleTimerOut.Status) : BananaMath.Qerp(0, 0.7f, 0.5f, unitBubbleTimerIn.Status), Origin: new Vector2(0.5f));
+				RenderManager.DrawQuad(
+					Key: "CONTEXT_MENU_CIRCLE", 
+					Position: pos + BUBBLE_A_POS, 
+					Scale: unitBubbleTimerOut.IsRunning ? BananaMath.Qerp(0.5f, 0.7f, 0.0f, unitBubbleTimerOut.Status) : BananaMath.Qerp(0, 0.7f, 0.5f, unitBubbleTimerIn.Status), 
+					Origin: new Vector2(0.5f),
+					Col: isTouchingA ? Color.LightGray : Color.White);
+				RenderManager.DrawQuad(
+					Key: "CONTEXT_MENU_CIRCLE", 
+					Position: pos + BUBBLE_B_POS, 
+					Scale: unitBubbleTimerOut.IsRunning ? BananaMath.Qerp(0.5f, 0.7f, 0.0f, unitBubbleTimerOut.Status) : BananaMath.Qerp(0, 0.7f, 0.5f, unitBubbleTimerIn.Status), 
+					Origin: new Vector2(0.5f),
+					Col: isTouchingB ? Color.LightGray : Color.White);
 			}
 
 			if (unitCountBubbleTimerIn.IsRunning || unitCountBubbleTimerIn.IsCompleted || unitCountBubbleTimerOut.IsRunning)
@@ -108,14 +193,13 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings
 				{
 					for (int i = 0; i < 4; i++)
 					{
-						float angle = MathHelper.Pi + MathHelper.PiOver4 * (float)i;
-						Vector2 bubblePos = new Vector2((float)Math.Cos(angle) * COUNT_BUBBLE_DISTANCE, (float)Math.Sin(angle) * COUNT_BUBBLE_DISTANCE) + (touchedBubble == BUBBLE_A_ID ? BUBBLE_A_POS : BUBBLE_B_POS);
+						Vector2 bubblePos = (touchedBubble == BUBBLE_A_ID ? BUBBLE_A_POS : BUBBLE_B_POS) + COUNT_BUBBLES[i];
 						RenderManager.DrawQuad(
 							Key: "CONTEXT_MENU_CIRCLE", 
 							Position: pos + bubblePos, 
 							Scale: unitCountBubbleTimerOut.IsRunning ? BananaMath.Qerp(0.2f, 0.3f, 0.0f, unitCountBubbleTimerOut.Status) : BananaMath.Qerp(0, 0.3f, 0.2f, unitCountBubbleTimerIn.Status), 
 							Origin: new Vector2(0.5f),
-							Col: Color.LightGray);
+							Col: isTouchingCount[i] ? Color.Gray : Color.LightGray);
 					}
 				}
 			}

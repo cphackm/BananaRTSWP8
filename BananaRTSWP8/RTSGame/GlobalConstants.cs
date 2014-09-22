@@ -15,5 +15,8 @@ namespace BananaRTSWP8.RTSGame
 		public const int TILE_HEIGHT = 32;
 
 		public const string BATTLEFIELD_LEVEL = "BATTLEFIELD";
+
+		// DEBUG CONSTANTS
+		public const string TU_BUILD_CM_D_KEY = "TWOUNIT_BUILDING_CONTEXTMENU_DEBUG_KEY";
 	}
 }

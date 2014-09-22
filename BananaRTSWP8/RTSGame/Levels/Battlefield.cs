@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BananaRTSWP8.Framework.Chunks.Dynamic;
 using BananaRTSWP8.Framework.Chunks.Structural;
+using BananaRTSWP8.RTSGame.Objects.Debug;
 using BananaRTSWP8.RTSGame.Objects.Units;
 using BananaRTSWP8.RTSGame.Objects.Buildings;
 using BananaRTSWP8.RTSGame.Objects.Buildings.DebugBuilding;
@@ -23,6 +24,9 @@ namespace BananaRTSWP8.RTSGame.Levels
 
 			DebugBuilding db = new DebugBuilding(3, 5);
 			RegisterObject(db, true);
+
+			BattlefieldDebug debug = new BattlefieldDebug();
+			RegisterObject(debug, true);
 		}
 
 		public override void Update()

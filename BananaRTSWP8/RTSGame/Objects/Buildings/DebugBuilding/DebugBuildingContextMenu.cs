@@ -41,10 +41,12 @@ namespace BananaRTSWP8.RTSGame.Objects.Buildings.DebugBuilding
 
 		public override void BubbleAAction(int Count)
 		{
+			GameManager.SetGlobalState(GlobalConstants.TU_BUILD_CM_D_KEY, "A" + Count.ToString());
 		}
 
 		public override void BubbleBAction(int Count)
 		{
+			GameManager.SetGlobalState(GlobalConstants.TU_BUILD_CM_D_KEY, "B" + Count.ToString());
 		}
 	}
 }

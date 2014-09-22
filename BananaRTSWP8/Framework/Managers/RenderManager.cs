@@ -16,6 +16,7 @@ namespace BananaRTSWP8.Framework.Managers
 		private static SpriteBatch spriteBatch;
 		private static bool isSpriteBatchRunning;
 		private static IDictionary<string, Texture2D> textures;
+		private static IDictionary<string, SpriteFont> fonts;
 		private static Texture2D nextTexture;
 		private static Vector2 scroll;
 		public static Vector2 Scroll
@@ -36,6 +37,7 @@ namespace BananaRTSWP8.Framework.Managers
 		static RenderManager()
 		{
 			textures = new Dictionary<string, Texture2D>();
+			fonts = new Dictionary<string, SpriteFont>();
 			nextTexture = null;
 			scroll = Vector2.Zero;
 		}
@@ -114,6 +116,11 @@ namespace BananaRTSWP8.Framework.Managers
 			textures[Key] = cm.Load<Texture2D>(Path);
 		}
 
+		public static void LoadFont(string Key, string Path)
+		{
+			fonts[Key] = cm.Load<SpriteFont>(Path);
+		}
+
 		public static void DrawQuad(string Key, Vector2 Position, Nullable<Color> Col = null, float Angle = 0.0f, float Scale = 1.0f, Nullable<Vector2> Origin = null, float Depth = 1.0f)
 		{
 			nextTexture = Key == null ? nextTexture : textures[Key];
@@ -127,6 +134,11 @@ namespace BananaRTSWP8.Framework.Managers
 				Scale, 
 				SpriteEffects.None, 
 				Depth);
+		}
+
+		public static void DrawString(string Key, string Text, Vector2 Position, float Scale, Color Col)
+		{
+			spriteBatch.DrawString(fonts[Key], Text, Position, Col, 0.0f, Vector2.Zero, Scale, SpriteEffects.None, 1.0f);
 		}
 	}
 }

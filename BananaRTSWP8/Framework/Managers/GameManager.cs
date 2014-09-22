@@ -24,16 +24,19 @@ namespace BananaRTSWP8.Framework.Managers
 			DT = (float)Time.ElapsedGameTime.TotalMilliseconds / 1000.0f;
 		}
 
-		public static bool SetGlobalState(string Key, object State)
+		public static void SetGlobalState(string Key, object State)
 		{
 			globalStates[Key] = State;
-
-			return true;
 		}
 
 		public static bool DoesGlobalStateExist(string Key)
 		{
 			return globalStates.ContainsKey(Key);
+		}
+
+		public static T GetGlobalState<T>(string Key)
+		{
+			return (T)globalStates[Key];
 		}
 	}
 }
